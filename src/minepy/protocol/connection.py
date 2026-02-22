@@ -11,11 +11,11 @@ import zlib
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
-from minepy.types import Position
-from minepy.vec3 import Vec3
+from core-core-minepy.types import Position
+from core-core-minepy.vec3 import Vec3
 
 if TYPE_CHECKING:
-    from minepy.bot import Bot
+    from core-core-minepy.bot import Bot
 
 logger = logging.getLogger(__name__)
 

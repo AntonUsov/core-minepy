@@ -1,8 +1,8 @@
-# Minepy Project - Final Completion Report
+# Core-core-minepy Project - Final Completion Report
 
 ## ✅ Мультиагентное выполнение завершено
 
-Проект Minepy полностью готов к использованию. Все запланированные фазы выполнены.
+Проект Core-core-minepy полностью готов к использованию. Все запланированные фазы выполнены.
 
 ---
 
@@ -21,7 +21,7 @@
 ## 🎯 Реализованные функции
 
 ### Phase 4: Inventory System
-**Файл:** `src/minepy/inventory.py` (534 lines)
+**Файл:** `src/core-core-minepy/inventory.py` (534 lines)
 
 **Основные классы:**
 - `Slot` - слот инвентаря с проверкой на пустоту
@@ -67,7 +67,7 @@ async def on_spawn():
 ---
 
 ### Phase 5: Physics Engine
-**Файл:** `src/minepy/physics.py` (179 lines)
+**Файл:** `src/core-core-minepy/physics.py` (179 lines)
 
 **Физические константы:**
 ```python
@@ -108,7 +108,7 @@ if block.is_solid:
 ---
 
 ### Phase 6: Combat Methods
-**Файл:** `src/minepy/bot.py` (добавлено ~40 lines)
+**Файл:** `src/core-core-minepy/bot.py` (добавлено ~40 lines)
 
 **Методы комата:**
 ```python
@@ -127,7 +127,7 @@ await bot.consume()
 ---
 
 ### Phase 7: Scoreboard System
-**Файл:** `src/minepy/scoreboard.py` (260 lines)
+**Файл:** `src/core-core-minepy/scoreboard.py` (260 lines)
 
 **Классы:**
 - `Scoreboard` - управление scoreboard objectives и scores
@@ -159,7 +159,7 @@ scoreboard.create_objective("hearts", "Hearts", ScoreboardObjectiveType.HEARTS)
 ## 📦 Файловая структура
 
 ```
-src/minepy/
+src/core-core-minepy/
 ├── __init__.py                    (1,688 bytes) ✅ Обновлен
 ├── bot.py                         (14,945 bytes) ✅ С интеграцией Inventory/World/Combat
 ├── vec3.py                        (10,480 bytes) - Векторная математика
@@ -281,7 +281,7 @@ pip install -e ".[dev]"
 ### Запуск
 ```python
 import asyncio
-from minepy import create_bot
+from core-core-minepy import create_bot
 
 async def main():
     bot = await create_bot(

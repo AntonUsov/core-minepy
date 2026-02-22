@@ -1,4 +1,4 @@
-"""Core Bot class for minepy."""
+"""Core Bot class for core-core-core-minepy."""
 
 from __future__ import annotations
 
@@ -7,12 +7,12 @@ import logging
 from collections.abc import Callable
 from typing import TYPE_CHECKING, Any, Unpack
 
-from minepy.events import EVENT_NAMES, EventHandler
-from minepy.plugin import Plugin, PluginLoader
-from minepy.types import AuthType, BotOptions, GameState, Player, Position
+from core-core-core-minepy.events import EVENT_NAMES, EventHandler
+from core-core-core-minepy.plugin import Plugin, PluginLoader
+from core-core-core-minepy.types import AuthType, BotOptions, GameState, Player, Position
 
 if TYPE_CHECKING:
-    from minepy.protocol.connection import Connection
+    from core-core-core-minepy.protocol.connection import Connection
 
 logger = logging.getLogger(__name__)
 
@@ -327,7 +327,7 @@ class Bot:
 
     async def connect(self) -> None:
         """Connect to the server."""
-        from minepy.protocol.connection import Connection
+        from core-core-core-minepy.protocol.connection import Connection
 
         self._connection = Connection(self)
         await self._connection.connect()
@@ -369,7 +369,7 @@ async def create_bot(**options: Unpack[BotOptions]) -> Bot:
 
     # Load internal plugins if enabled
     if options.get("load_internal_plugins", True):
-        from minepy.plugin import discover_plugins
+        from core-core-core-minepy.plugin import discover_plugins
 
         plugins = discover_plugins()
 

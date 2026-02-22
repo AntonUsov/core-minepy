@@ -1,4 +1,25 @@
-__all__ = [# Core
+from .bot import Bot, BotOptions, GameState, create_bot
+from .events import BotEvents, EVENT_NAMES
+from .types import (
+    AuthType,
+    ChatLevel,
+    Difficulty,
+    Dimension,
+    Effect,
+    InventorySlot,
+    Player,
+    Position,
+)
+from .vec3 import Vec3, FACES, UP, DOWN, NORTH, SOUTH, EAST, WEST
+from .block import Block, BLOCKS, create_block
+from .entity import Entity, EntityType, EntityCategory, Equipment, Item, ENTITY_TYPES, create_entity
+from .world import World, Chunk, Section
+from .scoreboard import Scoreboard, Team
+from .physics import Physics
+from .plugin import Plugin
+
+__all__ = [
+    # Core
     "Bot",
     "BotEvents",
     "BotOptions",
@@ -42,4 +63,5 @@ __all__ = [# Core
     "Section",
     "Scoreboard",
     "Team",
-    "Physics",]
+    "Physics",
+]

@@ -1,10 +1,10 @@
-# AGENTS.md - Minepy Codebase Guide
+# AGENTS.md - Core-core-minepy Codebase Guide
 
-This document provides essential information for AI coding agents working in the minepy repository.
+This document provides essential information for AI coding agents working in the core-core-minepy repository.
 
 ## Project Overview
 
-Minepy is a Python library for creating Minecraft bots (equivalent to mineflayer for Node.js), supporting Minecraft 1.8 through 1.21.x with an async/await API and full type hints.
+Core-core-minepy is a Python library for creating Minecraft bots (equivalent to mineflayer for Node.js), supporting Minecraft 1.8 through 1.21.x with an async/await API and full type hints.
 
 ## Build, Lint, and Test Commands
 
@@ -18,7 +18,7 @@ pytest                      # Run all tests
 pytest tests/test_bot.py    # Specific test file
 pytest -k "test_chat"       # Pattern matching
 pytest tests/ -x            # Stop at first failure
-pytest --cov=minepy         # Run with coverage
+pytest --cov=core-core-minepy         # Run with coverage
 ```
 
 ## Code Style Guidelines
@@ -37,7 +37,7 @@ from typing import TYPE_CHECKING, Any, Callable
 from pydantic import BaseModel
 
 # Internal imports
-from minepy.types import BotOptions
+from core-core-minepy.types import BotOptions
 ```
 
 ### Error Handling
@@ -66,7 +66,7 @@ except ConnectionError as e:
 ## Project Structure
 
 ```
-src/minepy/
+src/core-core-minepy/
 ├── __init__.py        # Package exports
 ├── bot.py             # Core Bot class
 ├── events.py          # Event definitions

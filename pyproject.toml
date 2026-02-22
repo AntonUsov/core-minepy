@@ -3,14 +3,14 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "minepy"
+name = "core-minepy"
 version = "0.2.0"
 description = "Create Minecraft bots with a powerful, high-level Python API"
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.10"
 authors = [
-    { name = "Minepy Contributors" }
+    { name = "Core-Core-minepy Contributors" }
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -43,16 +43,16 @@ dev = [
 ]
 
 [project.scripts]
-minepy = "minepy.cli:main"
+core-minepy = "core-minepy.cli:main"
 
-[project.entry-points."minepy.plugins"]
-bed = "minepy.plugins.bed:BedPlugin"
-chat = "minepy.plugins.chat:ChatPlugin"
-inventory = "minepy.plugins.inventory:InventoryPlugin"
-digging = "minepy.plugins.digging:DiggingPlugin"
+[project.entry-points."core-minepy.plugins"]
+bed = "core-minepy.plugins.bed:BedPlugin"
+chat = "core-minepy.plugins.chat:ChatPlugin"
+inventory = "core-minepy.plugins.inventory:InventoryPlugin"
+digging = "core-minepy.plugins.digging:DiggingPlugin"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/minepy"]
+packages = ["src/core-minepy"]
 
 [tool.ruff]
 line-length = 100
