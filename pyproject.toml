@@ -1,0 +1,70 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pyflayer"
+version = "0.1.0"
+description = "Create Minecraft bots with a powerful, high-level Python API"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.10"
+authors = [
+    { name = "Pyflayer Contributors" }
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Games/Entertainment",
+    "Typing :: Typed",
+]
+keywords = ["minecraft", "bot", "automation", "game"]
+
+dependencies = [
+    "anyio>=4.0.0",
+    "pydantic>=2.0.0",
+    "pynbt>=3.0.0",
+    "cryptography>=41.0.0",
+    "httpx>=0.25.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "mypy>=1.0.0",
+    "ruff>=0.1.0",
+    "black>=23.0.0",
+]
+
+[project.scripts]
+pyflayer = "pyflayer.cli:main"
+
+[project.entry-points."pyflayer.plugins"]
+bed = "pyflayer.plugins.bed:BedPlugin"
+chat = "pyflayer.plugins.chat:ChatPlugin"
+inventory = "pyflayer.plugins.inventory:InventoryPlugin"
+digging = "pyflayer.plugins.digging:DiggingPlugin"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pyflayer"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+select = ["E", "F", "I", "N", "W", "UP", "B", "C4", "SIM"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_return_any = true
+warn_unused_ignores = true
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
