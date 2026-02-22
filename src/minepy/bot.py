@@ -7,9 +7,18 @@ import logging
 from collections.abc import Callable
 from typing import TYPE_CHECKING, Any, Unpack
 
+from minepy.entity import Entity
 from minepy.events import EVENT_NAMES, EventHandler
+from minepy.inventory import Inventory
 from minepy.plugin import Plugin, PluginLoader
 from minepy.types import AuthType, BotOptions, GameState, Player, Position
+from minepy.world import World
+
+if TYPE_CHECKING:
+    from minepy.protocol.connection import Connection
+
+if TYPE_CHECKING:
+    from minepy.protocol.connection import Connection
 
 if TYPE_CHECKING:
     from minepy.protocol.connection import Connection
@@ -70,15 +79,35 @@ class Bot:
         self.is_sleeping: bool = False
         self.is_raining: bool = False
 
+        # World tracking
+        self._world: World | None = None
+
+                # World tracking
+        self._world: World | None = None
+
         # Entity tracking
-        self.entity: dict | None = None
-        self.entities: dict[int, dict] = {}
+        self.entity: Entity | None = None
+        self.entities: dict[int, Entity] = {}
         self.players: dict[str, Player] = {}
+    @property
+    def inventory(self) -> Inventory:
+        """Get the bot's inventory."""
+        if self._inventory is None:
+            self._inventory = Inventory(self)
+        return self._inventory
+
+    @property
+    def world(self) -> World:
+        """Get the world."""
+        if self._world is None:
+            self._world = World()
+        return self._world
+
 
         # Inventory
-        self.inventory: list[Any] = []
-        self.selected_slot: int = 0
-        self.held_item: dict | None = None
+        self._inventory: Inventory | None = None
+
+
 
     # ==================== Event System ====================
 

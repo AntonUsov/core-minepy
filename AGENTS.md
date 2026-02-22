@@ -18,6 +18,7 @@ pytest                      # Run all tests
 pytest tests/test_bot.py    # Specific test file
 pytest -k "test_chat"       # Pattern matching
 pytest tests/ -x            # Stop at first failure
+pytest --cov=minepy         # Run with coverage
 ```
 
 ## Code Style Guidelines
@@ -71,76 +72,17 @@ src/minepy/
 ├── events.py          # Event definitions
 ├── plugin.py          # Plugin system
 ├── types.py           # Type definitions
-├── protocol/          # Network protocol
-├── plugins/           # Built-in plugins
-└── py.typed           # PEP 561 marker
-
-examples/              # Example bots
-tests/                 # Test files
-```
-
-## Plugin Architecture
-
-```python
-from minepy.plugin import Plugin
-
-class MyPlugin(Plugin):
-    name = "my_plugin"
-
-    async def inject(self, bot: Bot) -> None:
-        bot.my_method = self._my_method
-        @bot.on("spawn")
-        async def on_spawn():
-            bot.chat("Plugin loaded!")
-
-    def _my_method(self) -> str:
-        return "Hello!"
-```
-
-## Testing Patterns
-
-```python
-import pytest
-from minepy import Bot, create_bot
-
-@pytest.mark.asyncio
-async def test_bot_connects():
-    bot = Bot(host="localhost", username="TestBot", auth="offline")
-    assert bot.username == "TestBot"
-
-@pytest.mark.asyncio
-async def test_event_handler():
-    bot = Bot(host="localhost", username="TestBot", auth="offline")
-    received = []
-    @bot.on("test")
-    async def on_test(value: str):
-        received.append(value)
-    await bot.emit("test", "hello")
-    assert received == ["hello"]
-```
-
-## Common Patterns
-
-### Creating the Bot
-```python
-import asyncio
-from minepy import create_bot
-
-async def main():
-    bot = await create_bot(host="localhost", username="MyBot", auth="offline")
-    @bot.on("spawn")
-    async def on_spawn():
-        bot.chat("Hello!")
-    await bot.wait_for("end")
-asyncio.run(main())
-```
-
-### Event Handling
-```python
-@bot.on("chat")
-async def on_chat(username: str, message: str, translate: str | None):
-    if username != bot.username:
-        bot.chat(f"Echo: {message}")
+├── vec3.py            # 3D vector class
+├── block.py           # Block class
+├── entity.py          # Entity class
+├── world.py           # World/Chunk/Section
+├── protocol/
+│   └── connection.py  # Network protocol
+└── plugins/           # Built-in plugins
+    ├── bed.py
+    ├── chat.py
+    ├── digging.py
+    └── inventory.py
 ```
 
 ## Dependencies
@@ -151,9 +93,23 @@ async def on_chat(username: str, message: str, translate: str | None):
 - **cryptography**: Encryption for online auth
 - **httpx**: HTTP client for Microsoft auth
 
+## Implementation Status
+
+### Completed
+- Event system (30+ events)
+- Plugin system
+- Vec3, Block, Entity, World classes
+- Basic protocol
+
+### TODO
+- Full packet handling
+- Physics engine
+- Inventory/windows
+- Microsoft auth
+- Combat, crafting, pathfinding
+
 ## Notes
 
 - Type hints required on all public functions
 - Use `TYPE_CHECKING` for circular imports
-- Raise exceptions for validation, emit events for runtime errors
-- Always register error handlers (`@bot.on("error")`)
+- Vec3 is used for all positions
