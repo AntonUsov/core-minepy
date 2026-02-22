@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-import re
 import logging
+import re
 from typing import TYPE_CHECKING
 
 logger = logging.getLogger(__name__)
@@ -25,10 +25,14 @@ class ChatPlugin(Plugin):
         # Chat patterns for parsing
         patterns: list[tuple[re.Pattern, str]] = []
 
-        def add_chat_pattern(name: str, pattern: re.Pattern, repeat: bool = True) -> int:
+        def add_chat_pattern(
+            name: str, pattern: re.Pattern, repeat: bool = True
+        ) -> int:
             """Add a chat pattern for parsing."""
             patterns.append((pattern, name))
-            logger.debug(f"[ChatPlugin.add_chat_pattern] Pattern: {name}, Repeat: {repeat}")
+            logger.debug(
+                f"[ChatPlugin.add_chat_pattern] Pattern: {name}, Repeat: {repeat}"
+            )
             return len(patterns) - 1
 
         def remove_chat_pattern(name: str | int) -> None:
@@ -52,11 +56,12 @@ class ChatPlugin(Plugin):
                     if isinstance(f, str):
                         if f not in message:
                             return
-                    elif isinstance(f, re.Pattern):
-                        if not f.search(message):
-                            return
+                    elif isinstance(f, re.Pattern) and not f.search(message):
+                        return
                 if not future.done():
-                    logger.debug(f"[ChatPlugin.await_message] Waiting for message matching filters: {filters}")
+                    logger.debug(
+                        f"[ChatPlugin.await_message] Waiting for message matching filters: {filters}"
+                    )
                     future.set_result(message)
 
             bot.add_event_handler("chat", handler)
@@ -76,5 +81,7 @@ class ChatPlugin(Plugin):
             for pattern, name in patterns:
                 match = pattern.search(message)
                 if match:
-                    logger.debug(f"[ChatPlugin.handle_chat] Message matched pattern '{name}': {message}")
+                    logger.debug(
+                        f"[ChatPlugin.handle_chat] Message matched pattern '{name}': {message}"
+                    )
                     await bot.emit(f"chat:{name}", username, message, match.groups())

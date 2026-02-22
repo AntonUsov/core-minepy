@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import asyncio
+import contextlib
 import logging
 import struct
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 from minepy.types import Position
 
@@ -40,7 +41,9 @@ class Connection:
         self._compression_threshold: int = -1
         self._receive_task: asyncio.Task | None = None
 
-        logger.debug(f"[Connection.__init__] Bot: {bot.username}, Host: {bot.host}:{bot.port}")
+        logger.debug(
+            f"[Connection.__init__] Bot: {bot.username}, Host: {bot.host}:{bot.port}"
+        )
 
         # Control states for movement
         self._control_states: dict[str, bool] = {
@@ -65,15 +68,23 @@ class Connection:
 
     async def connect(self) -> None:
         """Connect to the Minecraft server."""
-        logger.debug(f"[Connection.connect] Connecting to {self._bot.host}:{self._bot.port}...")
+        logger.debug(
+            f"[Connection.connect] Connecting to {self._bot.host}:{self._bot.port}..."
+        )
         try:
             self._reader, self._writer = await asyncio.open_connection(
                 self._bot.host, self._bot.port
             )
-            logger.debug(f"[Connection.connect] Connection established, starting handshake")
+            logger.debug(
+                "[Connection.connect] Connection established, starting handshake"
+            )
         except OSError as e:
-            logger.exception(f"[Connection.connect] Failed to connect to {self._bot.host}:{self._bot.port}")
-            raise ConnectionError(f"Failed to connect to {self._bot.host}:{self._bot.port}: {e}")
+            logger.exception(
+                f"[Connection.connect] Failed to connect to {self._bot.host}:{self._bot.port}"
+            )
+            raise ConnectionError(
+                f"Failed to connect to {self._bot.host}:{self._bot.port}: {e}"
+            )
 
         # Auto-detect protocol version if not specified
         if not self._bot.version:
@@ -100,7 +111,9 @@ class Connection:
 
         try:
             # Create new connection for ping
-            reader, writer = await asyncio.open_connection(self._bot.host, self._bot.port)
+            reader, writer = await asyncio.open_connection(
+                self._bot.host, self._bot.port
+            )
 
             # Send handshake for status (state=1)
             data = self._write_varint(769)  # Use latest version for ping
@@ -121,7 +134,9 @@ class Connection:
             packet_id, offset = self._read_varint_from_bytes_with_offset(packet_data, 0)
 
             if packet_id == 0x00:  # Status response
-                json_len, offset = self._read_varint_from_bytes_with_offset(packet_data, offset)
+                json_len, offset = self._read_varint_from_bytes_with_offset(
+                    packet_data, offset
+                )
                 json_data = packet_data[offset : offset + json_len].decode("utf-8")
                 status = json_module.loads(json_data)
                 protocol = status.get("version", {}).get("protocol", 0)
@@ -132,7 +147,7 @@ class Connection:
             return protocol
 
         except Exception:
-            logger.exception(f"[Connection._ping_server] Failed to ping server")
+            logger.exception("[Connection._ping_server] Failed to ping server")
             return None
 
     async def _send_packet_raw(
@@ -151,10 +166,8 @@ class Connection:
 
         if self._writer:
             self._writer.close()
-            try:
+            with contextlib.suppress(Exception):
                 asyncio.get_event_loop().run_until_complete(self._writer.wait_closed())
-            except Exception:
-                pass
             self._writer = None
 
         self._state = ConnectionState.CLOSED
@@ -198,22 +211,24 @@ class Connection:
 
     async def _receive_loop(self) -> None:
         """Main loop for receiving packets."""
-        logger.debug(f"[Connection._receive_loop] Starting receive loop")
+        logger.debug("[Connection._receive_loop] Starting receive loop")
         try:
             packet_count = 0
             while self.connected:
                 packet = await self._read_packet()
                 if packet:
                     packet_count += 1
-                    logger.debug(f"[Connection._receive_loop] Received packet #{packet_count}: ID=0x{packet[0]:02X}")
+                    logger.debug(
+                        f"[Connection._receive_loop] Received packet #{packet_count}: ID=0x{packet[0]:02X}"
+                    )
                     await self._handle_packet(packet)
                 else:
-                    logger.debug(f"[Connection._receive_loop] No packet received")
+                    logger.debug("[Connection._receive_loop] No packet received")
         except asyncio.CancelledError:
-            logger.debug(f"[Connection._receive_loop] Receive loop cancelled")
+            logger.debug("[Connection._receive_loop] Receive loop cancelled")
             pass
         except Exception as e:
-            logger.exception(f"[Connection._receive_loop] Exception in receive loop")
+            logger.exception("[Connection._receive_loop] Exception in receive loop")
             await self._bot.emit("error", e)
             self.disconnect(f"Connection error: {e}")
 
@@ -247,30 +262,42 @@ class Connection:
             return packet_id, packet_data
 
         except asyncio.IncompleteReadError:
-            logger.debug(f"[Connection._read_packet] Incomplete read, connection closing")
+            logger.debug(
+                "[Connection._read_packet] Incomplete read, connection closing"
+            )
             return None
 
     async def _handle_packet(self, packet: tuple[int, bytes]) -> None:
         """Handle a received packet."""
-        logger.debug(f"[Connection._handle_packet] Called with packet, current state: {self._state}")
+        logger.debug(
+            f"[Connection._handle_packet] Called with packet, current state: {self._state}"
+        )
         packet_id, data = packet
 
         if self._state == ConnectionState.LOGIN:
-            logger.debug(f"[Connection._handle_packet] Calling _handle_login_packet for ID: 0x{packet_id:02X}")
+            logger.debug(
+                f"[Connection._handle_packet] Calling _handle_login_packet for ID: 0x{packet_id:02X}"
+            )
             await self._handle_login_packet(packet_id, data)
         elif self._state == ConnectionState.PLAY:
-            logger.debug(f"[Connection._handle_packet] Calling _handle_play_packet for ID: 0x{packet_id:02X}")
+            logger.debug(
+                f"[Connection._handle_packet] Calling _handle_play_packet for ID: 0x{packet_id:02X}"
+            )
             await self._handle_play_packet(packet_id, data)
         else:
             logger.warning(f"[Connection._handle_packet] Unknown state: {self._state}")
 
     async def _handle_login_packet(self, packet_id: int, data: bytes) -> None:
         """Handle login packets."""
-        logger.debug(f"[Connection._handle_login_packet] Handling packet ID: 0x{packet_id:02X}")
+        logger.debug(
+            f"[Connection._handle_login_packet] Handling packet ID: 0x{packet_id:02X}"
+        )
         if packet_id == 0x02:  # Login Success
             self._state = ConnectionState.PLAY
             await self._bot.emit("login")
-            logger.debug(f"[Connection._handle_login_packet] Login successful, state changed to PLAY")
+            logger.debug(
+                "[Connection._handle_login_packet] Login successful, state changed to PLAY"
+            )
         elif packet_id == 0x01:  # Encryption Request
             # TODO: Implement encryption
             pass
@@ -279,7 +306,9 @@ class Connection:
 
     async def _handle_play_packet(self, packet_id: int, data: bytes) -> None:
         """Handle play state packets."""
-        logger.debug(f"[Connection._handle_play_packet] Handling packet ID: 0x{packet_id:02X}")
+        logger.debug(
+            f"[Connection._handle_play_packet] Handling packet ID: 0x{packet_id:02X}"
+        )
         # Packet IDs vary by version. For 1.21.x:
         # 0x2B = Login (Join Game)
         # 0x38 = Synchronize Player Position
@@ -289,7 +318,9 @@ class Connection:
 
         if protocol >= 767:  # 1.21+
             if packet_id == 0x2B:  # Login (Join Game)
-                logger.debug(f"[Connection._handle_play_packet] Received Join Game packet")
+                logger.debug(
+                    "[Connection._handle_play_packet] Received Join Game packet"
+                )
                 await self._handle_join_game(data)
             elif packet_id == 0x3B:  # Synchronize Player Position
                 await self._handle_player_position(data)
@@ -299,7 +330,9 @@ class Connection:
                 pass  # TODO: respond to keep alive
         else:  # 1.20.x and earlier
             if packet_id == 0x26:  # Join Game (1.20.4)
-                logger.debug(f"[Connection._handle_play_packet] Received Join Game packet (1.20.4)")
+                logger.debug(
+                    "[Connection._handle_play_packet] Received Join Game packet (1.20.4)"
+                )
                 await self._handle_join_game(data)
             elif packet_id == 0x38:  # Player Position (1.20.4)
                 await self._handle_player_position(data)
@@ -308,7 +341,9 @@ class Connection:
 
         # Emit spawn on any join/login packet
         if packet_id in (0x26, 0x2B, 0x27, 0x25):
-            logger.debug(f"[Connection._handle_play_packet] Emitting spawn event for packet ID: 0x{packet_id:02X}")
+            logger.debug(
+                f"[Connection._handle_play_packet] Emitting spawn event for packet ID: 0x{packet_id:02X}"
+            )
             await self._bot.emit("spawn")
 
     async def _handle_join_game(self, data: bytes) -> None:
@@ -334,7 +369,9 @@ class Connection:
     async def _handle_chat_message(self, data: bytes) -> None:
         """Handle chat message packet."""
         # Simplified - would need proper JSON parsing
-        logger.debug(f"[Connection._handle_chat_message] Received chat message (simplified)")
+        logger.debug(
+            "[Connection._handle_chat_message] Received chat message (simplified)"
+        )
         await self._bot.emit("chat", "Player", "Message", None)
 
     async def _send_packet(self, packet_id: int, data: bytes) -> None:
@@ -370,7 +407,9 @@ class Connection:
         data += struct.pack(">Q", 0)  # salt = 0
         data += self._write_varint(0)  # signature length = 0 (unsigned)
         data += self._write_varint(0)  # message count = 0
-        data += bytes(3)  # acknowledged = empty fixed bitset (3 bytes for up to 20 bits)
+        data += bytes(
+            3
+        )  # acknowledged = empty fixed bitset (3 bytes for up to 20 bits)
         asyncio.create_task(self._send_packet(0x06, data))
 
     async def activate_block(self, position: Position) -> None:
@@ -416,7 +455,9 @@ class Connection:
         # Serverbound Player Rotation packet (0x1B in 1.20.4)
         data = struct.pack(">ffB", yaw, pitch, self._bot.on_ground)
         await self._send_packet(0x1B, data)
-        logger.debug(f"[Connection.look] Sending look update - Yaw: {yaw}, Pitch: {pitch}")
+        logger.debug(
+            f"[Connection.look] Sending look update - Yaw: {yaw}, Pitch: {pitch}"
+        )
 
     # ==================== Utility Methods ====================
 
@@ -507,7 +548,9 @@ class Connection:
         return Connection._write_varint(len(encoded)) + encoded
 
     @staticmethod
-    def _read_varint_from_bytes_with_offset(data: bytes, offset: int) -> tuple[int, int]:
+    def _read_varint_from_bytes_with_offset(
+        data: bytes, offset: int
+    ) -> tuple[int, int]:
         """Read a varint from bytes with offset, return (value, new_offset)."""
         result = 0
         shift = 0

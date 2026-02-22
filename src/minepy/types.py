@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Literal, TypedDict, Unpack
+from typing import Literal, TypedDict
 
 
 class ChatLevel(str, Enum):

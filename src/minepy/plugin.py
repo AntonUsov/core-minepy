@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from abc import ABC, abstractmethod
 import logging
-from typing import TYPE_CHECKING, Any
+from abc import ABC, abstractmethod
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from minepy.bot import Bot
@@ -89,7 +89,9 @@ class PluginLoader:
         try:
             for dep in plugin.dependencies:
                 if dep not in self._loaded:
-                    raise ValueError(f"Plugin '{plugin.name}' requires '{dep}' which is not loaded")
+                    raise ValueError(
+                        f"Plugin '{plugin.name}' requires '{dep}' which is not loaded"
+                    )
 
             # Inject the plugin
             await plugin.inject(self._bot)
@@ -116,7 +118,9 @@ class PluginLoader:
 
             if not progress and remaining:
                 names = [p.name for p in remaining]
-                logger.warning(f"[PluginLoader.load_plugins] Cannot resolve dependencies for: {names}")
+                logger.warning(
+                    f"[PluginLoader.load_plugins] Cannot resolve dependencies for: {names}"
+                )
 
     def get_plugin(self, name: str) -> Plugin | None:
         """Get a loaded plugin by name."""

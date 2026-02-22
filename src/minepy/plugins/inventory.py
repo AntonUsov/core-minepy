@@ -42,7 +42,7 @@ class InventoryPlugin(Plugin):
             if source_slot is None:
                 raise ValueError(f"Item {item_id} not found in inventory")
 
-            dest_slot = EQUIPMENT_SLOTS[destination]
+            EQUIPMENT_SLOTS[destination]
 
             # Send click window packet to swap items
             # This is simplified - real implementation needs proper window handling

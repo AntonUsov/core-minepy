@@ -4,7 +4,8 @@ from __future__ import annotations
 
 import asyncio
 import logging
-from typing import TYPE_CHECKING, Any, Callable, Coroutine, Unpack
+from collections.abc import Callable
+from typing import TYPE_CHECKING, Any, Unpack
 
 from minepy.events import EVENT_NAMES, EventHandler
 from minepy.plugin import Plugin, PluginLoader
@@ -200,7 +201,9 @@ class Bot:
 
     def load_plugin(self, plugin: Plugin) -> None:
         """Load a plugin into this bot."""
-        return asyncio.get_event_loop().run_until_complete(self._plugin_loader.load_plugin(plugin))
+        return asyncio.get_event_loop().run_until_complete(
+            self._plugin_loader.load_plugin(plugin)
+        )
 
     async def load_plugin_async(self, plugin: Plugin) -> None:
         """Async version of load_plugin."""
@@ -236,7 +239,9 @@ class Bot:
         # Implemented by digging plugin
         raise NotImplementedError("Load the 'digging' plugin")
 
-    async def place_block(self, reference_position: Position, face: tuple[int, int, int]) -> None:
+    async def place_block(
+        self, reference_position: Position, face: tuple[int, int, int]
+    ) -> None:
         """Place a block relative to a reference block."""
         raise NotImplementedError("Load the 'place_block' plugin")
 

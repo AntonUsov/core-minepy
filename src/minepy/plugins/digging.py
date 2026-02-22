@@ -47,7 +47,9 @@ class DiggingPlugin(Plugin):
 
             return base_time
 
-        async def dig(block: dict, force_look: bool = True, dig_face: str = "auto") -> None:
+        async def dig(
+            block: dict, force_look: bool = True, dig_face: str = "auto"
+        ) -> None:
             """Dig a block."""
             nonlocal target_dig_block
 
@@ -97,7 +99,9 @@ class DiggingPlugin(Plugin):
 
             target_dig_block = None
 
-        async def place_block(reference_block: dict, face: tuple[int, int, int]) -> None:
+        async def place_block(
+            reference_block: dict, face: tuple[int, int, int]
+        ) -> None:
             """Place a block."""
             # Look at reference block
             await bot.look_at(reference_block["position"])
