@@ -1,4 +1,4 @@
-"""Core Bot class for pyflayer."""
+"""Core Bot class for minepy."""
 
 from __future__ import annotations
 
@@ -6,12 +6,12 @@ import asyncio
 import logging
 from typing import TYPE_CHECKING, Any, Callable, Coroutine, Unpack
 
-from pyflayer.events import EVENT_NAMES, EventHandler
-from pyflayer.plugin import Plugin, PluginLoader
-from pyflayer.types import AuthType, BotOptions, GameState, Player, Position
+from minepy.events import EVENT_NAMES, EventHandler
+from minepy.plugin import Plugin, PluginLoader
+from minepy.types import AuthType, BotOptions, GameState, Player, Position
 
 if TYPE_CHECKING:
-    from pyflayer.protocol.connection import Connection
+    from minepy.protocol.connection import Connection
 
 logger = logging.getLogger(__name__)
 
@@ -287,7 +287,7 @@ class Bot:
 
     async def connect(self) -> None:
         """Connect to the server."""
-        from pyflayer.protocol.connection import Connection
+        from minepy.protocol.connection import Connection
 
         self._connection = Connection(self)
         await self._connection.connect()
@@ -329,7 +329,7 @@ async def create_bot(**options: Unpack[BotOptions]) -> Bot:
 
     # Load internal plugins if enabled
     if options.get("load_internal_plugins", True):
-        from pyflayer.plugin import discover_plugins
+        from minepy.plugin import discover_plugins
 
         plugins = discover_plugins()
 

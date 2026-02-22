@@ -1,4 +1,4 @@
-# Pyflayer - Ready for GitHub ✓
+# Minepy - Ready for GitHub ✓
 
 ## ✅ What's Been Prepared
 
@@ -12,7 +12,7 @@
 
 ### Project Structure Ready
 ```
-pyflayer/
+minepy/
 ├── .git/                    # Git repository
 ├── .gitignore              # Git ignore patterns
 ├── LICENSE                 # MIT license
@@ -20,7 +20,7 @@ pyflayer/
 ├── GITHUB_SETUP.md         # GitHub setup instructions
 ├── README.md               # Project documentation
 ├── pyproject.toml          # Project configuration
-├── src/pyflayer/           # Main source code
+├── src/minepy/           # Main source code
 │   ├── __init__.py
 │   ├── bot.py
 │   ├── events.py
@@ -47,7 +47,7 @@ pyflayer/
 
 1. **Create Repository on GitHub:**
    - Go to https://github.com/new
-   - Repository name: `pyflayer`
+   - Repository name: `minepy`
    - Description: "Create Minecraft bots with a powerful, high-level Python API"
    - Visibility: Private or Public
    - Don't check "Initialize with README" (we have one)
@@ -56,7 +56,7 @@ pyflayer/
 2. **Push to GitHub:**
    ```bash
    # Replace YOUR_USERNAME with your GitHub username
-   git remote add origin https://github.com/YOUR_USERNAME/pyflayer.git
+   git remote add origin https://github.com/YOUR_USERNAME/minepy.git
 
    # Push to GitHub (use master or main branch)
    git push -u origin master
@@ -66,7 +66,7 @@ pyflayer/
 
 ```bash
 # Create repository automatically
-gh repo create pyflayer --private --source=. --remote=origin
+gh repo create minepy --private --source=. --remote=origin
 
 # Push to GitHub
 git push -u origin master
@@ -129,11 +129,11 @@ git push -u origin master
    - Publish on GitHub releases
 
 4. **Share the Repository**
-   - Link: https://github.com/YOUR_USERNAME/pyflayer
+   - Link: https://github.com/YOUR_USERNAME/minepy
 
 ## ✨ Ready to Ship!
 
-Your Pyflayer project is fully prepared for GitHub. Just follow the steps above and push to GitHub!
+Your Minepy project is fully prepared for GitHub. Just follow the steps above and push to GitHub!
 
 ---
 

@@ -1,4 +1,4 @@
-# Pyflayer
+# Minepy
 
 Create Minecraft bots with a powerful, high-level Python API.
 
@@ -18,14 +18,14 @@ A Python equivalent of [mineflayer](https://github.com/PrismarineJS/mineflayer),
 ## Installation
 
 ```bash
-pip install pyflayer
+pip install minepy
 ```
 
 ## Quick Start
 
 ```python
 import asyncio
-from pyflayer import create_bot
+from minepy import create_bot
 
 async def main():
     bot = await create_bot(
@@ -56,7 +56,7 @@ asyncio.run(main())
 ## Plugin System
 
 ```python
-from pyflayer import Plugin
+from minepy import Plugin
 
 class MyPlugin(Plugin):
     name = "my_plugin"

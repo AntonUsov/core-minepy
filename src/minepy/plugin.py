@@ -1,4 +1,4 @@
-"""Plugin system for pyflayer."""
+"""Plugin system for minepy."""
 
 from __future__ import annotations
 
@@ -7,17 +7,17 @@ import logging
 from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
-    from pyflayer.bot import Bot
+    from minepy.bot import Bot
 
 logger = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
-    from pyflayer.bot import Bot
+    from minepy.bot import Bot
 
 
 class Plugin(ABC):
     """
-    Base class for pyflayer plugins.
+    Base class for minepy plugins.
 
     Plugins extend bot functionality by injecting new methods and
     registering event handlers.
@@ -135,10 +135,10 @@ def discover_plugins() -> dict[str, type[Plugin]]:
     plugins: dict[str, type[Plugin]] = {}
 
     try:
-        entry_points = md.entry_points(group="pyflayer.plugins")
+        entry_points = md.entry_points(group="minepy.plugins")
     except TypeError:
         # Python < 3.10
-        entry_points = md.entry_points().get("pyflayer.plugins", [])
+        entry_points = md.entry_points().get("minepy.plugins", [])
 
     for ep in entry_points:
         try:

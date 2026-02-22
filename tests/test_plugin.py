@@ -2,8 +2,8 @@
 
 import pytest
 
-from pyflayer.bot import Bot
-from pyflayer.plugin import Plugin, PluginLoader
+from minepy.bot import Bot
+from minepy.plugin import Plugin, PluginLoader
 
 
 class MockPlugin(Plugin):

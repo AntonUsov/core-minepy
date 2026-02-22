@@ -2,8 +2,8 @@
 
 import pytest
 
-from pyflayer import Bot, create_bot
-from pyflayer.plugin import Plugin
+from minepy import Bot, create_bot
+from minepy.plugin import Plugin
 
 
 class TestBotCreation:

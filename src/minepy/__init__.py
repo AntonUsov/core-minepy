@@ -6,10 +6,10 @@ A Python equivalent of mineflayer, supporting Minecraft 1.8 through 1.21.x.
 
 from __future__ import annotations
 
-from pyflayer.bot import Bot, create_bot
-from pyflayer.events import BotEvents
-from pyflayer.plugin import Plugin
-from pyflayer.types import BotOptions, GameState
+from minepy.bot import Bot, create_bot
+from minepy.events import BotEvents
+from minepy.plugin import Plugin
+from minepy.types import BotOptions, GameState
 
 __all__ = [
     "Bot",

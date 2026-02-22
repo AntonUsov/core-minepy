@@ -1,10 +1,10 @@
-# AGENTS.md - Pyflayer Codebase Guide
+# AGENTS.md - Minepy Codebase Guide
 
-This document provides essential information for AI coding agents working in the pyflayer repository.
+This document provides essential information for AI coding agents working in the minepy repository.
 
 ## Project Overview
 
-Pyflayer is a Python library for creating Minecraft bots (equivalent to mineflayer for Node.js), supporting Minecraft 1.8 through 1.21.x with an async/await API and full type hints.
+Minepy is a Python library for creating Minecraft bots (equivalent to mineflayer for Node.js), supporting Minecraft 1.8 through 1.21.x with an async/await API and full type hints.
 
 ## Build, Lint, and Test Commands
 
@@ -36,7 +36,7 @@ from typing import TYPE_CHECKING, Any, Callable
 from pydantic import BaseModel
 
 # Internal imports
-from pyflayer.types import BotOptions
+from minepy.types import BotOptions
 ```
 
 ### Error Handling
@@ -65,7 +65,7 @@ except ConnectionError as e:
 ## Project Structure
 
 ```
-src/pyflayer/
+src/minepy/
 ├── __init__.py        # Package exports
 ├── bot.py             # Core Bot class
 ├── events.py          # Event definitions
@@ -82,7 +82,7 @@ tests/                 # Test files
 ## Plugin Architecture
 
 ```python
-from pyflayer.plugin import Plugin
+from minepy.plugin import Plugin
 
 class MyPlugin(Plugin):
     name = "my_plugin"
@@ -101,7 +101,7 @@ class MyPlugin(Plugin):
 
 ```python
 import pytest
-from pyflayer import Bot, create_bot
+from minepy import Bot, create_bot
 
 @pytest.mark.asyncio
 async def test_bot_connects():
@@ -124,7 +124,7 @@ async def test_event_handler():
 ### Creating the Bot
 ```python
 import asyncio
-from pyflayer import create_bot
+from minepy import create_bot
 
 async def main():
     bot = await create_bot(host="localhost", username="MyBot", auth="offline")

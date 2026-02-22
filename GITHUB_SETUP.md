@@ -3,7 +3,7 @@
 ## Step 1: Create GitHub Repository
 
 1. Go to https://github.com/new
-2. Repository name: `pyflayer`
+2. Repository name: `minepy`
 3. Description: "Create Minecraft bots with a powerful, high-level Python API - Python equivalent of mineflayer"
 4. Make it Private or Public (recommended: Private for now)
 5. Don't initialize with README, .gitignore, or license (we have them)
@@ -15,7 +15,7 @@ After creating the repository, follow these steps in your terminal:
 
 ```bash
 # Add GitHub as a remote repository
-git remote add origin https://github.com/YOUR_USERNAME/pyflayer.git
+git remote add origin https://github.com/YOUR_USERNAME/minepy.git
 
 # Push to GitHub (master branch)
 git push -u origin master
@@ -31,7 +31,7 @@ If you have GitHub CLI installed:
 
 ```bash
 # Create repository (requires authentication)
-gh repo create pyflayer --private --source=. --remote=origin
+gh repo create minepy --private --source=. --remote=origin
 
 # Push to GitHub
 git push -u origin master

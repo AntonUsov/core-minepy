@@ -1,4 +1,4 @@
-"""Event system for pyflayer."""
+"""Event system for minepy."""
 
 from __future__ import annotations
 

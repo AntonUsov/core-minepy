@@ -5,10 +5,10 @@ from __future__ import annotations
 import asyncio
 from typing import TYPE_CHECKING
 
-from pyflayer.plugin import Plugin
+from minepy.plugin import Plugin
 
 if TYPE_CHECKING:
-    from pyflayer.bot import Bot
+    from minepy.bot import Bot
 
 
 class DiggingPlugin(Plugin):

@@ -1,4 +1,4 @@
-"""Type definitions for pyflayer."""
+"""Type definitions for minepy."""
 
 from __future__ import annotations
 

@@ -10,7 +10,7 @@ Commands:
 import asyncio
 import sys
 
-from pyflayer import create_bot
+from minepy import create_bot
 
 
 async def main():

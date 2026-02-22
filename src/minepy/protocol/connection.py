@@ -7,10 +7,10 @@ import logging
 import struct
 from typing import TYPE_CHECKING, Any
 
-from pyflayer.types import Position
+from minepy.types import Position
 
 if TYPE_CHECKING:
-    from pyflayer.bot import Bot
+    from minepy.bot import Bot
 
 logger = logging.getLogger(__name__)
 

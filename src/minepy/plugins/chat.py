@@ -8,10 +8,10 @@ from typing import TYPE_CHECKING
 
 logger = logging.getLogger(__name__)
 
-from pyflayer.plugin import Plugin
+from minepy.plugin import Plugin
 
 if TYPE_CHECKING:
-    from pyflayer.bot import Bot
+    from minepy.bot import Bot
 
 
 class ChatPlugin(Plugin):
